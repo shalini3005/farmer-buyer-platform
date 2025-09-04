@@ -126,6 +126,201 @@ footer a:hover {color:#ffffff;}
   background: #b71c1c;
 }
 
+/* Wrapping table for better scrolling on small screens */
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+/* Styled table */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.styled-table thead {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.styled-table th, .styled-table td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+.styled-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #f1f7f1;
+}
+
+/* Small action button */
+.btn-small {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  background: #4CAF50;
+  color: white;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+/* ==== Buyer Dashboard Layout (scoped) ==== */
+.buyer .buyer-top {
+  display: grid;
+  grid-template-columns: minmax(260px, 380px) 1fr; /* narrower post form, more space for My Requests */
+  gap: 20px;
+  align-items: start;
+}
+
+/* Make the products table comfortable */
+.buyer .buyer-products table {
+  table-layout: auto;
+}
+
+.buyer .buyer-products table th {
+  white-space: nowrap;
+}
+
+/* Compact message box in action column */
+.buyer .buyer-products .msg-input {
+  width: 140px;
+  padding: 6px 8px;
+  font-size: 13px;
+}
+/* ==== Buyer Dashboard Layout ==== */
+.buyer {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center dashboard */
+}
+
+.buyer h1.center-text {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* top row layout */
+.buyer .buyer-top {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(300px, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 30px;
+}
+
+/* farmer products full width */
+.buyer .buyer-products {
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* wider price column */
+.buyer .buyer-products .wide-col {
+  width: 160px;
+}
+
+/* fix message box */
+.buyer .buyer-products .msg-input {
+  width: 140px;
+  padding: 6px 8px;
+  font-size: 13px;
+}
+
+/* optional: wrap table in scroll container if too wide */
+.table-wrapper {
+  overflow-x: auto;
+}
+/* ==== Buyer Dashboard Fix: Post Request + My Requests spacing ==== */
+.buyer .buyer-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* equal width for both cards */
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 30px;
+}
+
+.buyer .buyer-top .card {
+  width: 100%; /* ensure cards fill their grid cell */
+  box-sizing: border-box;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 768px) {
+  .buyer .buyer-top {
+    grid-template-columns: 1fr; /* stack vertically */
+  }
+}
+/* ==== Farmer Dashboard Layout ==== */
+.farmer-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center dashboard */
+}
+
+.farmer-dashboard h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* top row: Add Product + Buyer Requests */
+.farmer-dashboard .cards-container {
+  display: grid;
+  grid-template-columns: minmax(260px, 380px) 1fr; /* narrow add product form, more space for Buyer Requests */
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 30px;
+}
+
+/* Your Products full width */
+.farmer-dashboard .product-list {
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 20px;
+}
+
+/* Ensure all cards fill their grid cell */
+.farmer-dashboard .card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Compact message input in action column */
+.farmer-dashboard .card form input[name="message_text"] {
+  width: 140px;
+  padding: 6px 8px;
+  font-size: 13px;
+}
+
+/* Optional: wrap tables for horizontal scroll on small screens */
+.farmer-dashboard .card .table-wrapper {
+  overflow-x: auto;
+}
+
+/* Responsive: stack cards vertically on small screens */
+@media (max-width: 768px) {
+  .farmer-dashboard .cards-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Optional: subtle shadow & spacing consistency */
+.buyer .card { margin: 0; }
+
+
+.btn-small:hover {
+  background: #45a049;
+}
 
 /* Responsive */
 @media (max-width:768px){

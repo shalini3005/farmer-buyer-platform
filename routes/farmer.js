@@ -1,7 +1,7 @@
 // routes/farmer.js
 const express = require("express");
 const router = express.Router();
-const db = require("../db/database");
+const db = require("../db/init");
 
 // Middleware: only farmers can access
 function requireFarmer(req, res, next) {
@@ -19,16 +19,17 @@ router.get("/dashboard", requireFarmer, (req, res) => {
   db.all("SELECT * FROM products WHERE farmer_id = ?", [farmerId], (err, productRows) => {
     if (err) return res.send("DB Error (products): " + err.message);
 
-    // Fetch buyer requests (optional: show all requests)
+    // Fetch buyer requests
     db.all(
-      "SELECT r.*, u.name as buyer_name FROM requests r JOIN users u ON r.buyer_id = u.id",
+      "SELECT r.*, u.name as buyer_name, u.id as buyer_id FROM requests r JOIN users u ON r.buyer_id = u.id",
       [],
       (err2, requestRows) => {
         if (err2) return res.send("DB Error (requests): " + err2.message);
 
         res.render("farmer_dashboard", {
-          productList: productRows,   // ✅ Matches EJS
-          buyerRequests: requestRows, // ✅ Matches EJS
+          productList: productRows,
+          buyerRequests: requestRows,
+          session: req.session
         });
       }
     );

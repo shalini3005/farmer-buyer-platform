@@ -1,7 +1,7 @@
 // routes/buyer.js
 const express = require("express");
 const router = express.Router();
-const db = require("../db/database");
+const db = require("../db/init");
 
 // Middleware: only buyers can access
 function requireBuyer(req, res, next) {
@@ -17,7 +17,7 @@ router.get("/dashboard", requireBuyer, (req, res) => {
 
   // Fetch all farmer products
   db.all(
-    "SELECT p.*, u.name as farmer_name FROM products p JOIN users u ON p.farmer_id = u.id",
+    "SELECT p.*, u.name as farmer_name, u.id as farmer_id FROM products p JOIN users u ON p.farmer_id = u.id",
     [],
     (err, productRows) => {
       if (err) return res.send("DB Error (products): " + err.message);
@@ -27,8 +27,9 @@ router.get("/dashboard", requireBuyer, (req, res) => {
         if (err2) return res.send("DB Error (requests): " + err2.message);
 
         res.render("buyer_dashboard", {
-          farmerProducts: productRows, // ✅ matches EJS
-          myRequests: requestRows,     // ✅ matches EJS
+          farmerProducts: productRows,
+          myRequests: requestRows,
+          session: req.session
         });
       });
     }

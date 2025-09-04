@@ -1,63 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Buyer Dashboard</title>
-  <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 <header>
   <div class="container header-container">
     <div class="logo">FarmConnect</div>
     <nav>
-      <a href="/">Home</a>
-      <a href="/logout">Logout</a>
-    </nav>
+  <a href="/">Home</a>
+  <a href="/messages/inbox">Inbox</a>
+  <a href="/logout">Logout</a>
+</nav>
+
   </div>
 </header>
 
-<main class="container dashboard">
-  <h1>Welcome, <%= session.user.name %></h1>
+<main class="container dashboard buyer">
+  <h1 class="center-text">Welcome, <%= session.user.name %></h1>
 
-  <section class="cards-container">
-    <!-- Add Request -->
+  <!-- Top row: Post Request + My Requests -->
+  <section class="buyer-top">
+    <!-- Post a Request -->
     <div class="card">
       <h3><i class="fas fa-plus-circle"></i> Post a Request</h3>
       <form action="/buyer/add-request" method="POST">
-        <input type="text" name="crop_name" placeholder="Crop Name" required>
-        <input type="text" name="quantity" placeholder="Quantity (e.g., 50 kg)" required>
-        <input type="text" name="price" placeholder="Expected Price (e.g., ₹25 per kg)" required>
+        <input type="text" name="crop_name" placeholder="Crop Name" required/>
+        <input type="text" name="quantity" placeholder="Quantity (e.g., 50 kg)" required/>
+        <input type="text" name="price" placeholder="Expected Price (e.g., ₹25 per kg)" required/>
         <button class="btn" type="submit"><i class="fas fa-plus"></i> Post</button>
       </form>
-    </div>
-
-    <!-- Farmer Products -->
-    <div class="card">
-      <h3><i class="fas fa-warehouse"></i> Farmer Products</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Farmer</th>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Harvest Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% (farmerProducts || []).forEach(prod => { %>
-            <tr>
-              <td><%= prod.farmer_name %></td>
-              <td><%= prod.product_name %></td>
-              <td><%= prod.quantity %></td>
-              <td><%= prod.price %></td>
-              <td><%= prod.harvest_date %></td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
     </div>
 
     <!-- My Requests -->
@@ -77,6 +53,43 @@
               <td><%= req.crop_name %></td>
               <td><%= req.quantity %></td>
               <td><%= req.price %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Farmer Products full width -->
+  <section class="card buyer-products">
+    <h3><i class="fas fa-warehouse"></i> Farmer Products</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Farmer</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th class="wide-col">Price</th>
+            <th>Harvest Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (farmerProducts || []).forEach(prod => { %>
+            <tr>
+              <td><%= prod.farmer_name %></td>
+              <td><%= prod.product_name %></td>
+              <td><%= prod.quantity %></td>
+              <td><%= prod.price %></td>
+              <td><%= prod.harvest_date %></td>
+              <td>
+                <form action="/messages/send" method="POST" style="display:flex; gap:8px; justify-content:center; align-items:center;">
+                  <input type="hidden" name="receiver_id" value="<%= prod.farmer_id %>"/>
+                  <input type="text" name="message_text" class="msg-input" placeholder="Message..." required/>
+                  <button class="btn" type="submit">Send</button>
+                </form>
+              </td>
             </tr>
           <% }) %>
         </tbody>

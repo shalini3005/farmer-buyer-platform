@@ -13,16 +13,18 @@
     <div class="logo">FarmConnect</div>
     <nav>
       <a href="/">Home</a>
+      <a href="/messages/inbox">Inbox</a>
       <a href="/logout">Logout</a>
     </nav>
   </div>
 </header>
 
-<main class="container dashboard">
-  <h1>Welcome, <%= session.user.name %></h1>
+<main class="container dashboard farmer-dashboard">
+  <h1 class="center-text">Welcome, <%= session.user.name %></h1>
 
+  <!-- Top row: Add Product + Buyer Requests -->
   <section class="cards-container">
-    <!-- Add Product -->
+    <!-- Add Product Form -->
     <div class="card">
       <h3><i class="fas fa-plus-circle"></i> Add Product</h3>
       <form action="/farmer/add-produce" method="POST">
@@ -37,31 +39,43 @@
     <!-- Buyer Requests -->
     <div class="card">
       <h3><i class="fas fa-list-alt"></i> Buyer Requests</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Buyer</th>
-            <th>Crop</th>
-            <th>Quantity</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% (buyerRequests || []).forEach(req => { %>
+      <div class="table-wrapper">
+        <table>
+          <thead>
             <tr>
-              <td><%= req.buyer_name %></td>
-              <td><%= req.crop_name %></td>
-              <td><%= req.quantity %></td>
-              <td><%= req.price %></td>
+              <th>Buyer</th>
+              <th>Crop</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Action</th>
             </tr>
-          <% }) %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% (buyerRequests || []).forEach(req => { %>
+              <tr>
+                <td><%= req.buyer_name %></td>
+                <td><%= req.crop_name %></td>
+                <td><%= req.quantity %></td>
+                <td><%= req.price %></td>
+                <td>
+                  <form action="/messages/send" method="POST" style="display:flex; gap:5px; justify-content:center; align-items:center;">
+                    <input type="hidden" name="receiver_id" value="<%= req.buyer_id %>">
+                    <input type="text" name="message_text" placeholder="Type message..." class="msg-input" required>
+                    <button class="btn" type="submit">Send</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </section>
 
-    <!-- Your Products -->
-    <div class="card">
-      <h3><i class="fas fa-box-open"></i> Product List</h3>
+  <!-- Your Products (Full Width) -->
+  <section class="card product-list">
+    <h3><i class="fas fa-box-open"></i> Product List</h3>
+    <div class="table-wrapper">
       <table>
         <thead>
           <tr>

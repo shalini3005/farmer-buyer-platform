@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inbox</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .messages-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .message-card {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .message-header span {
+      font-weight: bold;
+    }
+    .message-text {
+      font-size: 0.95rem;
+      margin: 0.5rem 0;
+    }
+    .message-meta {
+      font-size: 0.8rem;
+      color: gray;
+      text-align: right;
+    }
+    .send-message-form {
+      margin-top: 2rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .send-message-form select, 
+    .send-message-form textarea, 
+    .send-message-form button {
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.7rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .send-message-form button {
+      background: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .send-message-form button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container header-container">
+    <div class="logo">FarmConnect</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/buyer/dashboard">Buyer Dashboard</a>
+      <a href="/farmer/dashboard">Farmer Dashboard</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h1><i class="fas fa-envelope"></i> Inbox</h1>
+
+  <!-- Message List -->
+  <section class="messages-container">
+    <% if (messages.length === 0) { %>
+      <p>No messages yet. Start a conversation below 👇</p>
+    <% } %>
+    <% messages.forEach(msg => { %>
+      <div class="message-card">
+        <div class="message-header">
+          <span>
+            <i class="fas fa-user"></i> 
+            <%= msg.sender_id === user.id ? "You" : msg.sender_name %>
+            ➡ <%= msg.receiver_id === user.id ? "You" : msg.receiver_name %>
+          </span>
+        </div>
+        <div class="message-text"><%= msg.message_text %></div>
+        <div class="message-meta">
+          <i class="fas fa-clock"></i> <%= new Date(msg.created_at).toLocaleString() %>
+        </div>
+      </div>
+    <% }) %>
+  </section>
+
+  <!-- Send Message Form -->
+  <section class="send-message-form">
+    <h3><i class="fas fa-paper-plane"></i> Send a Message</h3>
+    <form action="/messages/send" method="POST">
+      <select name="receiver_id" required>
+        <option value="">-- Select User --</option>
+        <% users.forEach(u => { if (u.id !== user.id) { %>
+          <option value="<%= u.id %>"><%= u.name %> (<%= u.role %>)</option>
+        <% } }) %>
+      </select>
+      <textarea name="message_text" rows="3" placeholder="Write your message..." required></textarea>
+      <button type="submit"><i class="fas fa-paper-plane"></i> Send</button>
+    </form>
+  </section>
+</main>
+</body>
+</html>
