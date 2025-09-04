@@ -1,0 +1,18 @@
+<header>
+  <div class="container header-container">
+    <div class="logo">FarmConnect</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/register">Register</a>
+      <a href="/login">Login</a>
+      
+      <% if (session && session.user) { %>
+        <a href="/logout">Logout</a>
+      <% } %>
+
+      <% if (session && session.user && session.user.role === 'admin') { %>
+        <a href="/admin/dashboard">Admin</a>
+      <% } %>
+    </nav>
+  </div>
+</header>

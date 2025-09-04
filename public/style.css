@@ -1,0 +1,135 @@
+/* Base & Reset */
+* {margin:0; padding:0; box-sizing:border-box;}
+body {font-family:'Segoe UI',Tahoma,sans-serif; background:#f9f9f9; color:#333; line-height:1.6;}
+a {text-decoration:none; color:#2e7d32;}
+a:hover {color:#4caf50;}
+
+/* Header */
+header {background:#2e7d32; color:white; padding:15px 0;}
+.header-container {width:90%; max-width:1200px; margin:auto; display:flex; justify-content:space-between; align-items:center;}
+header nav a {margin-left:20px; font-weight:bold; color:white;}
+header nav a:hover {color:#c8e6c9;}
+.logo {font-size:26px; font-weight:bold;}
+
+/* Hero */
+.hero {background:linear-gradient(rgba(46,125,50,0.7), rgba(46,125,50,0.7)), url('/images/hero.jpg') center/cover no-repeat; height:400px; display:flex; align-items:center; justify-content:center; text-align:center; color:white;}
+.hero h1 {font-size:38px; margin-bottom:15px;}
+.hero p {font-size:20px; margin-bottom:20px;}
+.btn {background:#4caf50; color:white; padding:12px 28px; border-radius:5px; font-weight:bold; transition:background 0.3s;}
+.btn:hover {background:#1b5e20;}
+
+/* Feature Cards */
+.features {padding:60px 0; text-align:center;}
+.features h2 {font-size:30px; margin-bottom:40px;}
+.feature-cards {display:flex; flex-wrap:wrap; justify-content:center; gap:25px;}
+.feature-cards .card {background:white; padding:25px; width:280px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s;}
+.feature-cards .card:hover {transform:translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.25);}
+.feature-cards .card h3 {margin-bottom:12px; color:#2e7d32;}
+.feature-cards .card .icon {color:#2e7d32; margin-bottom:12px;}
+
+/* Dashboard */
+.dashboard h1 {text-align:center; margin:25px 0;}
+.cards-container {display:flex; flex-wrap:wrap; gap:25px; justify-content:center; margin-bottom:50px;}
+.card {background:white; padding:20px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.15); width:360px; flex-grow:1; transition: transform 0.3s, box-shadow 0.3s;}
+.card:hover {transform:translateY(-5px); box-shadow:0 8px 25px rgba(0,0,0,0.25);}
+.card table {width:100%; border-collapse:collapse; margin-top:12px;}
+.card table th, .card table td {border:1px solid #ddd; padding:10px; text-align:left;}
+.card table th {background:#2e7d32; color:white;}
+.card table tr:nth-child(even) {background:#f2f2f2;}
+.card form input, .card form select, .card form textarea, .card form button {width:100%; padding:10px; margin-bottom:12px; border-radius:6px; border:1px solid #ccc;}
+.card form button {background:#2e7d32; color:white; border:none; font-weight:bold; cursor:pointer; transition: background 0.3s;}
+.card form button:hover {background:#4caf50;}
+.card h3 {display:flex; align-items:center; gap:8px;}
+
+/* Status Labels */
+.status-instock {color:white; background:#4caf50; padding:4px 8px; border-radius:6px; font-size:12px; font-weight:bold;}
+.status-sold {color:white; background:#f44336; padding:4px 8px; border-radius:6px; font-size:12px; font-weight:bold;}
+
+/* Auth Pages */
+.auth-container {display:flex; justify-content:center; align-items:center; min-height:80vh;}
+.auth-card {background:white; padding:40px 30px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.2); width:360px; text-align:center;}
+.auth-card h2 {margin-bottom:20px; color:#2e7d32;}
+.auth-card p {font-size:14px;}
+.auth-card a {color:#2e7d32; font-weight:bold;}
+.auth-card a:hover {color:#4caf50;}
+
+/* Footer */
+footer {background:#2e7d32; color:white; padding:25px 0; text-align:center;}
+footer a {color:#c8e6c9;}
+footer a:hover {color:#ffffff;}
+
+/* Auth Pages */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+.auth-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    width: 360px;
+    text-align: center;
+}
+.auth-card h2 {
+    margin-bottom: 20px;
+    color: #2e7d32;
+}
+.auth-card p {
+    font-size: 14px;
+}
+.auth-card a {
+    color: #2e7d32;
+    font-weight: bold;
+}
+.auth-card a:hover {
+    color: #4caf50;
+}
+
+/* Form Inputs & Buttons - Fix spacing */
+.auth-card form input,
+.auth-card form select,
+.auth-card form button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px; /* spacing between boxes */
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    display: block; /* ensure each element is on its own line */
+    box-sizing: border-box;
+    font-size: 16px;
+}
+.auth-card form button {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.auth-card form button:hover {
+    background: #4caf50;
+}
+/* Danger Button */
+.btn.danger {
+  background: #d32f2f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.btn.danger:hover {
+  background: #b71c1c;
+}
+
+
+/* Responsive */
+@media (max-width:768px){
+    .cards-container, .feature-cards {flex-direction:column; align-items:center;}
+    .card, .feature-cards .card {width:90%;}
+    header nav a {margin-left:10px;font-size:14px;}
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="container header-container">
+    <div class="logo">FarmConnect</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container dashboard">
+  <h1>Welcome, <%= session.user.name %></h1>
+
+  <section class="cards-container">
+    <!-- Add Product -->
+    <div class="card">
+      <h3><i class="fas fa-plus-circle"></i> Add Product</h3>
+      <form action="/farmer/add-produce" method="POST">
+        <input type="text" name="product_name" placeholder="Product Name" required>
+        <input type="text" name="quantity" placeholder="Quantity (e.g., 100 kg)" required>
+        <input type="text" name="price" placeholder="Price (e.g., ₹30 per kg)" required>
+        <input type="date" name="harvest_date" required>
+        <button class="btn" type="submit"><i class="fas fa-plus"></i> Add</button>
+      </form>
+    </div>
+
+    <!-- Buyer Requests -->
+    <div class="card">
+      <h3><i class="fas fa-list-alt"></i> Buyer Requests</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Buyer</th>
+            <th>Crop</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (buyerRequests || []).forEach(req => { %>
+            <tr>
+              <td><%= req.buyer_name %></td>
+              <td><%= req.crop_name %></td>
+              <td><%= req.quantity %></td>
+              <td><%= req.price %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Your Products -->
+    <div class="card">
+      <h3><i class="fas fa-box-open"></i> Product List</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Harvest Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (productList || []).forEach(prod => { %>
+            <tr>
+              <td><%= prod.product_name %></td>
+              <td><%= prod.quantity %></td>
+              <td><%= prod.price %></td>
+              <td><%= prod.harvest_date %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>

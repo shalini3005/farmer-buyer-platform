@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Include header -->
+<%- include('partials/header') %>
+
+<main class="container dashboard">
+  <h1>Welcome, Admin</h1>
+
+  <section class="cards-container">
+    <!-- Users -->
+    <div class="card">
+      <h3><i class="fas fa-users-cog"></i> Users</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (users || []).forEach(user => { %>
+            <tr>
+              <td><%= user.id %></td>
+              <td><%= user.name %></td>
+              <td><%= user.phone %></td>
+              <td><%= user.role %></td>
+              <td>
+                <form action="/admin/delete-user/<%= user.id %>" method="POST" style="display:inline;">
+                  <button class="btn danger" type="submit" onclick="return confirm('Delete this user?');">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Produce Listings -->
+    <div class="card">
+      <h3><i class="fas fa-leaf"></i> Produce Listings</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Farmer</th>
+            <th>Crop</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Harvest Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (produce || []).forEach(item => { %>
+            <tr>
+              <td><%= item.id %></td>
+              <td><%= item.farmer_name %></td>
+              <td><%= item.crop_name %></td>
+              <td><%= item.quantity %></td>
+              <td>₹<%= item.price %></td>
+              <td><%= item.harvest_date %></td>
+              <td>
+                <form action="/admin/delete-produce/<%= item.id %>" method="POST" style="display:inline;">
+                  <button class="btn danger" type="submit" onclick="return confirm('Delete this produce?');">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Buyer Requests -->
+    <div class="card">
+      <h3><i class="fas fa-handshake"></i> Buyer Requests</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Buyer</th>
+            <th>Crop</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (requests || []).forEach(req => { %>
+            <tr>
+              <td><%= req.id %></td>
+              <td><%= req.buyer_name %></td>
+              <td><%= req.crop_name %></td>
+              <td><%= req.quantity %></td>
+              <td>₹<%= req.price %></td>
+              <td>
+                <form action="/admin/delete-request/<%= req.id %>" method="POST" style="display:inline;">
+                  <button class="btn danger" type="submit" onclick="return confirm('Delete this request?');">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
