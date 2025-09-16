@@ -56,4 +56,42 @@ router.post("/add-produce", requireFarmer, (req, res) => {
   );
 });
 
+// ===== AI-Powered Irrigation Prototype =====
+// Simulated irrigation data for demo/hackathon
+router.get("/irrigation/:field_id", requireFarmer, async (req, res) => {
+  const field_id = req.params.field_id;
+  const crop_type = "Wheat"; // hardcoded for demo, can fetch real crop
+
+  // Simulate soil moisture (0-100%)
+  const soil_moisture = Math.floor(Math.random() * 100);
+
+  // Simulate rain forecast (mm)
+  const rain_forecast = Math.floor(Math.random() * 20);
+
+  // Simple AI/rule-based irrigation logic
+  let irrigation_amount = 0;
+  if (soil_moisture < 40 && rain_forecast < 10) irrigation_amount = 25;
+  else if (soil_moisture < 60 && rain_forecast < 10) irrigation_amount = 10;
+
+  // Save simulated data to DB
+  db.run(
+    "INSERT INTO irrigation_data (field_id, crop_type, soil_moisture, rain_forecast, irrigation_amount) VALUES (?, ?, ?, ?, ?)",
+    [field_id, crop_type, soil_moisture, rain_forecast, irrigation_amount],
+    function (err) {
+      if (err) console.error("DB Insert Error (irrigation):", err.message);
+    }
+  );
+
+  // Return JSON to frontend
+  res.json({ field_id, crop_type, soil_moisture, rain_forecast, irrigation_amount });
+});
+
+router.get("/irrigation-page", (req, res) => {
+  if (!req.session.user || req.session.user.role !== "farmer") {
+    return res.redirect("/login");
+  }
+  res.render("irrigation_status", { session: req.session });
+});
+
+
 module.exports = router;

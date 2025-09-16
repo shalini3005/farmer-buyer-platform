@@ -328,3 +328,35 @@ footer a:hover {color:#ffffff;}
     .card, .feature-cards .card {width:90%;}
     header nav a {margin-left:10px;font-size:14px;}
 }
+/* ==== Farmer Dashboard - Irrigation Card ==== */
+.farmer-dashboard .irrigation-status {
+    background: #e8f5e9; /* light green background for water/agri feel */
+    border-left: 6px solid #4caf50; /* accent color */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.farmer-dashboard .irrigation-status h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #2e7d32;
+}
+
+.farmer-dashboard .irrigation-status p {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .farmer-dashboard .irrigation-status {
+        padding: 15px;
+        margin: 15px 0;
+    }
+    .farmer-dashboard .irrigation-status p {
+        font-size: 14px;
+    }
+}

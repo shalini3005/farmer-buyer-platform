@@ -11,10 +11,18 @@
 <header>
   <div class="container header-container">
     <div class="logo">FarmConnect</div>
-    <nav>
+    <nav style="display:flex; align-items:center; gap:15px;">
       <a href="/">Home</a>
       <a href="/messages/inbox">Inbox</a>
       <a href="/logout">Logout</a>
+
+      <!-- Header 3-dot menu -->
+      <div style="position:relative;">
+        <button id="header-menu-btn" style="background:none; border:none; font-size:20px; cursor:pointer;">&#8942;</button>
+        <div id="header-menu-dropdown" style="display:none; position:absolute; right:0; background:white; border:1px solid #ccc; border-radius:6px; min-width:180px; box-shadow:0 2px 8px rgba(0,0,0,0.1); z-index:10;">
+          <a href="/farmer/irrigation-page" style="display:block; padding:8px 12px; color:#333;">💧 Irrigation Status</a>
+        </div>
+      </div>
     </nav>
   </div>
 </header>
@@ -99,5 +107,23 @@
     </div>
   </section>
 </main>
+
+<script>
+const headerMenuBtn = document.getElementById('header-menu-btn');
+const headerMenuDropdown = document.getElementById('header-menu-dropdown');
+
+headerMenuBtn.addEventListener('click', () => {
+  headerMenuDropdown.style.display =
+    headerMenuDropdown.style.display === 'none' ? 'block' : 'none';
+});
+
+// Close dropdown if clicked outside
+document.addEventListener('click', function(event) {
+  if (!headerMenuBtn.contains(event.target) && !headerMenuDropdown.contains(event.target)) {
+    headerMenuDropdown.style.display = 'none';
+  }
+});
+</script>
+
 </body>
 </html>

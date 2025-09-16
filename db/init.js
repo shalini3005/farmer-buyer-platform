@@ -67,7 +67,23 @@ db.serialize(() => {
     )
   `);
 
-  console.log("✅ Tables created successfully!");
+  // Irrigation data table
+  db.run(`
+    CREATE TABLE IF NOT EXISTS irrigation_data (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      field_id TEXT NOT NULL,
+      soil_moisture INTEGER,
+      crop_type TEXT,
+      irrigation_amount INTEGER,
+      rain_forecast INTEGER,
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `, (err) => {
+    if (err) console.error('❌ Error creating irrigation_data table:', err.message);
+    else console.log('✅ irrigation_data table is ready!');
+  });
+
+  console.log("✅ All tables created successfully!");
 });
 
 // Export database connection

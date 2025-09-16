@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Irrigation Status</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 80vh;
+    }
+    .irrigation-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+      width: 400px;
+      text-align: center;
+    }
+    .irrigation-box h2 {
+      margin-bottom: 20px;
+      color: #2e7d32;
+    }
+    .irrigation-box p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container header-container">
+    <div class="logo">FarmConnect</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/farmer/dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<main class="center-container">
+  <div class="irrigation-box">
+    <h2><i class="fas fa-tint"></i> Irrigation Status</h2>
+    <p>🌱 Soil Moisture: <span id="moisture">--</span>%</p>
+    <p>💧 Water Needed: <span id="water">--</span> liters/m²</p>
+    <p>☁️ Rain Forecast: <span id="forecast">--</span> mm</p>
+    <div id="irrigation-alert" style="margin-top:15px; font-weight:bold;"></div>
+  </div>
+</main>
+
+<script>
+async function fetchIrrigation() {
+  try {
+    const res = await fetch('/farmer/irrigation/field1');
+    const data = await res.json();
+
+    document.getElementById('moisture').innerText = data.soil_moisture;
+    document.getElementById('water').innerText = data.irrigation_amount;
+    document.getElementById('forecast').innerText = data.rain_forecast;
+
+    const alertDiv = document.getElementById('irrigation-alert');
+    if (data.irrigation_amount > 0) {
+      alertDiv.innerHTML = `<span style="color:red;">🚨 Irrigation Needed: ${data.irrigation_amount} liters/m²</span>`;
+    } else {
+      alertDiv.innerHTML = `<span style="color:green;">✅ No irrigation required</span>`;
+    }
+  } catch (err) {
+    console.error('Error fetching irrigation data:', err);
+  }
+}
+
+fetchIrrigation();
+setInterval(fetchIrrigation, 60000);
+</script>
+</body>
+</html>
